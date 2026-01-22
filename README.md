@@ -1,2 +1,14 @@
 # Login-Registration-System
-A Python project about Registring and loging to an account.
+
+A secure login and registration system built with Python.
+
+## Features
+- Login & Register
+- Password hashing
+- SQLite database
+- Input validation
+
+## Technologies
+- Python
+- Tkinter
+- SQLite
