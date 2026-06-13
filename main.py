@@ -70,11 +70,9 @@ class LoginApp:
         self.root.title("ALI USER SYSTEM")
         self.root.attributes("-fullscreen", True)
 
-        # Start in dark mode
         self.dark = True
         self.set_theme()
 
-        # Main centered container
         self.container = tk.Frame(root, bg=self.bg)
         self.container.place(
             relx=0.5,
@@ -105,7 +103,6 @@ class LoginApp:
         self.fade_in()
         self.show_login()
 
-        # Keyboard shortcuts
         self.root.bind("<Return>", lambda e: self.login())
         self.root.bind("<Escape>", lambda e: self.root.destroy())
 
@@ -126,7 +123,7 @@ class LoginApp:
             self.box = "#ffffff"
             self.outline = "#64748b"
             self.fg = "#020617"
-            self.btn = "#1e40af"       # darker blue in light mode
+            self.btn = "#1e40af"      
             self.btn_hover = "#1e3a8a"
 
         self.root.configure(bg=self.bg)
@@ -238,7 +235,6 @@ class LoginApp:
             relief="flat"
         ).pack(side="right", padx=5)
 
-        # Placeholder behavior
         e.bind(
             "<FocusIn>",
             lambda _: (e.delete(0, tk.END), e.config(fg=self.fg, show="*"))
