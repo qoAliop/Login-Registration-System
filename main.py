@@ -5,15 +5,10 @@ import os
 import re
 import time
 
-# =========================================================
-# DATABASE SETUP
-# Creates a local SQLite database to store users securely
-# =========================================================
 
 conn = sqlite3.connect("users.db")
 cur = conn.cursor()
 
-# Create users table if it doesn't already exist
 cur.execute("""
 CREATE TABLE IF NOT EXISTS users (
     username TEXT PRIMARY KEY,
@@ -23,10 +18,6 @@ CREATE TABLE IF NOT EXISTS users (
 """)
 conn.commit()
 
-# =========================================================
-# SECURITY FUNCTIONS
-# Handles hashing and password verification
-# =========================================================
 
 def hash_password(password, salt=None):
     """
@@ -72,9 +63,6 @@ def username_valid(u):
     """
     return re.fullmatch(r"[A-Za-z_.]+", u)
 
-# =========================================================
-# MAIN APPLICATION CLASS
-# =========================================================
 
 class LoginApp:
     def __init__(self, root):
@@ -96,7 +84,6 @@ class LoginApp:
             height=580
         )
 
-        # App title
         self.title = tk.Label(
             self.container,
             text="ALI USER SYSTEM",
@@ -106,7 +93,6 @@ class LoginApp:
         )
         self.title.pack(pady=(20, 10))
 
-        # Inline status message (errors / success)
         self.status = tk.Label(
             self.container,
             text="",
@@ -116,19 +102,13 @@ class LoginApp:
         )
         self.status.pack(pady=(0, 10))
 
-        # Startup animation
         self.fade_in()
-
-        # Show login screen first
         self.show_login()
 
         # Keyboard shortcuts
         self.root.bind("<Return>", lambda e: self.login())
         self.root.bind("<Escape>", lambda e: self.root.destroy())
 
-    # =====================================================
-    # THEME HANDLING (LIGHT / DARK MODE)
-    # =====================================================
 
     def set_theme(self):
         """
@@ -162,9 +142,6 @@ class LoginApp:
         self.status.configure(bg=self.bg)
         self.show_login()
 
-    # =====================================================
-    # ANIMATIONS
-    # =====================================================
 
     def fade_in(self):
         """
@@ -175,9 +152,6 @@ class LoginApp:
             self.root.update()
             time.sleep(0.03)
 
-    # =====================================================
-    # COMMON UI HELPERS
-    # =====================================================
 
     def clear(self):
         """
@@ -301,9 +275,6 @@ class LoginApp:
         b.bind("<Leave>", lambda _: b.config(bg=bg))
         return b
 
-    # =====================================================
-    # LOGIN SCREEN
-    # =====================================================
 
     def show_login(self):
         self.clear()
@@ -323,7 +294,6 @@ class LoginApp:
         self.button("Create Account", self.show_signup)
         self.button("Forgot Password", self.show_forgot)
 
-        # Theme toggle button
         tk.Button(
             self.container,
             text="🌙 / ☀",
@@ -357,9 +327,6 @@ class LoginApp:
         else:
             self.set_status("Wrong password")
 
-    # =====================================================
-    # WELCOME SCREEN (AFTER LOGIN)
-    # =====================================================
 
     def show_welcome(self, username):
         self.clear()
@@ -382,9 +349,6 @@ class LoginApp:
 
         self.button("BACK", self.show_login)
 
-    # =====================================================
-    # SIGN UP SCREEN
-    # =====================================================
 
     def show_signup(self):
         self.clear()
@@ -429,9 +393,6 @@ class LoginApp:
         except sqlite3.IntegrityError:
             self.set_status("Username already exists")
 
-    # =====================================================
-    # FORGOT PASSWORD
-    # =====================================================
 
     def show_forgot(self):
         self.clear()
@@ -467,10 +428,6 @@ class LoginApp:
             self.set_status("User not found")
         else:
             self.set_status(f"Temp password: {temp}", success=True)
-
-# =========================================================
-# RUN APPLICATION
-# =========================================================
 
 root = tk.Tk()
 app = LoginApp(root)
